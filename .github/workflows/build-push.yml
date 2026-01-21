@@ -22,7 +22,6 @@ env:
 
 jobs:
   build:
-   # runs-on: ${{ matrix.platform == 'linux/arm64' && 'arm64_runner' || 'ubuntu-latest' }}
     runs-on: 'ubuntu-latest'
     if: github.repository == 'zhaohejing/dify'
     strategy:
@@ -92,7 +91,7 @@ jobs:
   create-manifest:
     needs: build
     runs-on: ubuntu-latest
-    if: github.repository == 'langgenius/dify'
+    if: github.repository == 'zhaohejing/dify'
     strategy:
       matrix:
         include:
