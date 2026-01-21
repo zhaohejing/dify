@@ -59,7 +59,14 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env[matrix.image_name_env] }}
-
+      - name: Set up swap for ARM build
+        if: matrix.platform == 'linux/arm64'
+        run: |
+            sudo dd if=/dev/zero of=/swapfile bs=1M count=4096
+            sudo chmod 600 /swapfile
+            sudo mkswap /swapfile
+            sudo swapon /swapfile
+            free -h
       - name: Build Docker image
         id: build
         uses: docker/build-push-action@v6
