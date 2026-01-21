@@ -35,6 +35,10 @@ const nextConfig = {
       bundler: 'turbopack',
     }),
   },
+  experimental:{
+     workerThreads: false,
+     cpus: 2   
+  },
   productionBrowserSourceMaps: false, // enable browser source map generation during the production build
   // Configure pageExtensions to include md and mdx
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
