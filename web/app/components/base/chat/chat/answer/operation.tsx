@@ -8,6 +8,7 @@ import {
   RiResetLeftLine,
   RiThumbDownLine,
   RiThumbUpLine,
+  RiAdvertisementFill
 } from '@remixicon/react'
 import copy from 'copy-to-clipboard'
 import {
@@ -133,6 +134,29 @@ const Operation: FC<OperationProps> = ({
     }
     handleFeedback('like', undefined, target)
   }
+  const handleVoiceClick = (target: 'user' | 'admin') => {
+
+    if (!('speechSynthesis' in window)) {
+      alert('您的浏览器不支持语音播报');
+      return;
+    }
+    if (!item.content) return;
+    console.log("item.content", item.content,);
+    // let voices = window.speechSynthesis.getVoices();
+    // console.log("voices", voices);
+    // speechSynthesis.pause();
+    try {
+       window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(item.content);
+      utter.lang = 'zh-CN';        // 语种
+      utter.rate = 1;            // 语速
+      utter.pitch = 1;             // 音调
+      speechSynthesis.speak(utter);
+    } catch (error) {
+      console.log("error", error);
+    }
+
+  }
 
   const handleDislikeClick = (target: 'user' | 'admin') => {
     const currentRating = target === 'admin' ? adminLocalFeedback?.rating : displayUserFeedback?.rating
@@ -226,6 +250,22 @@ const Operation: FC<OperationProps> = ({
                 )}
           </div>
         )}
+        {
+          <div className={cn(
+            'ml-1 items-center gap-0.5 rounded-[10px] border-[0.5px] border-components-actionbar-border bg-components-actionbar-bg p-0.5 shadow-md backdrop-blur-sm',
+            hasUserFeedback ? 'flex' : 'hidden group-hover:flex',
+          )}
+          >
+            {<>
+              <ActionButton
+                onClick={() => handleVoiceClick('user')}
+              >
+                <RiAdvertisementFill className="h-4 w-4" />
+              </ActionButton>
+
+            </>}
+          </div>
+        }
         {shouldShowAdminFeedbackBar && (
           <div className={cn(
             'ml-1 items-center gap-0.5 rounded-[10px] border-[0.5px] border-components-actionbar-border bg-components-actionbar-bg p-0.5 shadow-md backdrop-blur-sm',

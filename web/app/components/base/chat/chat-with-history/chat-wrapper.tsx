@@ -252,7 +252,7 @@ const ChatWrapper = () => {
     : null
 
   return (
-    <div
+    <div style={{ backgroundImage: "url('/special/bg.png')", backgroundPosition: 'center', backgroundSize: 'cover'}}
       className="h-full overflow-hidden bg-chatbot-bg"
     >
       <Chat
